@@ -1,0 +1,10 @@
+.venv/
+venv/
+__pycache__/
+data/
+artifacts/
+mlruns/
+.DS_Store
+.ipynb_checkpoints/
+.vscode/
+.idea/

@@ -1,0 +1,9 @@
+name: 'delivery_ops'
+version: '1.0'
+profile: 'delivery_ops'
+model-paths: ['models']
+models:
+  delivery_ops:
+    +materialized: table
+    staging:
+      +materialized: view

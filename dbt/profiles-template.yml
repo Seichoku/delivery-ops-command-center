@@ -1,0 +1,7 @@
+delivery_ops:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: data/delivery_ops.duckdb
+      threads: 4
