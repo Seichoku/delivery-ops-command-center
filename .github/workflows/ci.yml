@@ -19,6 +19,16 @@ jobs:
         run: |
           pip install ruff
           ruff check .
+      - name: Debug Python path
+        run: |
+          python - << 'PY'
+          import sys, os, json
+          print("cwd:", os.getcwd())
+          print("workspace:", os.getenv("GITHUB_WORKSPACE"))
+          print("sys.path[0]:", sys.path[0])
+          print("has api dir:", os.path.isdir("api"))
+          print("api files:", os.listdir("api") if os.path.isdir("api") else [])
+          PY
       - name: Tests
         env:
           PYTHONPATH: ${{ github.workspace }}
