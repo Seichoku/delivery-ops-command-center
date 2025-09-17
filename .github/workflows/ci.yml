@@ -15,4 +15,6 @@ jobs:
       - name: Lint
         run: ruff check .
       - name: Tests
+        env:
+          PYTHONPATH: ${{ github.workspace}}
         run: pytest -q
