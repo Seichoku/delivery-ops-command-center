@@ -1,6 +1,6 @@
 # expectations/bootstrap_check.py
 from great_expectations.dataset import PandasDataset
-import duckdb, pandas as pd
+import duckdb
 
 con = duckdb.connect("data/delivery_ops.duckdb")
 df = con.execute("select * from main.features limit 5000").fetchdf()

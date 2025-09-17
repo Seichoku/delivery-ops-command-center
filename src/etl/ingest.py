@@ -4,7 +4,8 @@ import duckdb
 import pandas as pd
 from pathlib import Path
 
-import requests, certifi
+import requests
+import certifi
 
 DATA_DIR = Path("data")
 DB_PATH = DATA_DIR / "delivery_ops.duckdb"
@@ -47,7 +48,7 @@ def main():
     df = df[(df["duration_min"] >= 0) & (df["duration_min"] <= 240)]  # clamp to 4h
 
     con = duckdb.connect(DB_PATH.as_posix())
-    con.execute(f"CREATE SCHEMA IF NOT EXISTS raw;")
+    con.execute("CREATE SCHEMA IF NOT EXISTS raw;")
     con.execute(f"DROP TABLE IF EXISTS raw.{TABLE};")
     con.register("df", df)
     con.execute(f"CREATE TABLE raw.{TABLE} AS SELECT * FROM df;")
