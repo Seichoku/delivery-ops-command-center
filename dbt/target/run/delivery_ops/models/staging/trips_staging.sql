@@ -1,4 +1,7 @@
-with src as (
+
+  
+  create view "delivery_ops"."main"."trips_staging__dbt_tmp" as (
+    with src as (
   select
     CAST(tpep_pickup_datetime AS TIMESTAMP)   as pickup_ts,
     CAST(tpep_dropoff_datetime AS TIMESTAMP)  as dropoff_ts,
@@ -22,3 +25,4 @@ with src as (
     and duration_min between 0 and 240
 )
 select * from src
+  );

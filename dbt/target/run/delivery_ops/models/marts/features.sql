@@ -1,4 +1,13 @@
-with base as (
+
+  
+    
+    
+
+    create  table
+      "delivery_ops"."main"."features__dbt_tmp"
+  
+    as (
+      with base as (
   select
     pickup_ts,
     date_trunc('hour', pickup_ts) as pickup_hour,
@@ -16,7 +25,7 @@ with base as (
       when trip_distance_mi <= 5.0 then 40.0
       else 90.0
     end as expected_duration_min
-  from {{ ref('trips_staging') }}
+  from "delivery_ops"."main"."trips_staging"
 ),
 labeled as (
   select
@@ -25,3 +34,6 @@ labeled as (
   from base
 )
 select * from labeled
+    );
+  
+  

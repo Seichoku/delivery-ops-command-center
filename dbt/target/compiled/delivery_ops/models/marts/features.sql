@@ -16,7 +16,7 @@ with base as (
       when trip_distance_mi <= 5.0 then 40.0
       else 90.0
     end as expected_duration_min
-  from {{ ref('trips_staging') }}
+  from "delivery_ops"."main"."trips_staging"
 ),
 labeled as (
   select

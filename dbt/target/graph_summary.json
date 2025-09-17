@@ -1,0 +1,1 @@
+{"_invocation_id": "e1d79c41-be67-49a4-be84-b39a50c48555", "linked": {"0": {"name": "model.delivery_ops.features", "type": "model"}, "1": {"name": "model.delivery_ops.trips_staging", "type": "model", "succ": [0]}}}
