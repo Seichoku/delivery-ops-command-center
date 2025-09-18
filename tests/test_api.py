@@ -1,9 +1,10 @@
-from fastapi.testclient import TestClient
-from api.main import app
+def test_score(client):
+    resp = client.post("/score", json={"avg_dist": 2.5})
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "prediction" in body
 
-client = TestClient(app)
 
-def test_health():
-    r = client.get('/health')
-    assert r.status_code == 200
-    assert r.json()['status'] == 'ok'
+def test_score_invalid(client):
+    resp = client.post("/score", json={})
+    assert resp.status_code == 422

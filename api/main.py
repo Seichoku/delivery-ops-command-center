@@ -3,14 +3,17 @@ from pydantic import BaseModel
 
 app = FastAPI(title="Delivery Ops API", version="0.1.0")
 
+
 class Trip(BaseModel):
     pickup_hour: int
     distance_km: float
     pickup_zone: str
 
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
 
 @app.post("/score")
 def score(trip: Trip):
