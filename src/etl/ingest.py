@@ -16,6 +16,7 @@ URL = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.p
 
 LOCAL_PARQUET = DATA_DIR / "yellow_tripdata_2023-01.parquet"
 
+
 def download_parquet():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     if LOCAL_PARQUET.exists():
@@ -27,24 +28,31 @@ def download_parquet():
                 if chunk:
                     f.write(chunk)
 
+
 def main():
     download_parquet()
 
     # Read parquet into DataFrame (column-subset to keep it light)
     cols = [
-        "tpep_pickup_datetime","tpep_dropoff_datetime",
-        "passenger_count","trip_distance","PULocationID","DOLocationID",
-        "fare_amount","total_amount","payment_type","congestion_surcharge"
+        "tpep_pickup_datetime",
+        "tpep_dropoff_datetime",
+        "passenger_count",
+        "trip_distance",
+        "PULocationID",
+        "DOLocationID",
+        "fare_amount",
+        "total_amount",
+        "payment_type",
+        "congestion_surcharge",
     ]
     df = pd.read_parquet(LOCAL_PARQUET, columns=cols)
 
     # Basic cleaning
-    df = df.dropna(subset=["tpep_pickup_datetime","tpep_dropoff_datetime","trip_distance"])
+    df = df.dropna(subset=["tpep_pickup_datetime", "tpep_dropoff_datetime", "trip_distance"])
     df = df[df["trip_distance"] >= 0]
     df["duration_min"] = (
-        (pd.to_datetime(df["tpep_dropoff_datetime"]) - pd.to_datetime(df["tpep_pickup_datetime"]))
-        .dt.total_seconds() / 60.0
-    )
+        pd.to_datetime(df["tpep_dropoff_datetime"]) - pd.to_datetime(df["tpep_pickup_datetime"])
+    ).dt.total_seconds() / 60.0
     df = df[(df["duration_min"] >= 0) & (df["duration_min"] <= 240)]  # clamp to 4h
 
     con = duckdb.connect(DB_PATH.as_posix())
@@ -55,6 +63,7 @@ def main():
     con.close()
 
     print(f"Loaded {len(df):,} rows into {DB_PATH} as raw.{TABLE}")
+
 
 if __name__ == "__main__":
     main()
